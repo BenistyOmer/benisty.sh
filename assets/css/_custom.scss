@@ -1,0 +1,466 @@
+/* ============================================================
+   Header — transparent overlay, title left, nav+icons right
+   ============================================================ */
+header {
+  background-color: transparent !important;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100 !important;
+  box-shadow: none !important;
+
+  &:hover {
+    box-shadow: none !important;
+  }
+}
+
+/* Standard left-right layout */
+.header-wrapper {
+  justify-content: space-between !important;
+  padding: 0 1.5rem !important;
+}
+
+/* Show the site title on the left — white text */
+.header-title {
+  display: block !important;
+
+  a {
+    color: #ffffff !important;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+  }
+
+  .header-title-text {
+    color: #ffffff !important;
+  }
+}
+
+/* Hide the theme toggle button entirely */
+.theme-switch {
+  display: none !important;
+}
+
+/* Remove any stray lines — breadcrumb borders, menu delimiters */
+.breadcrumb-container,
+.breadcrumb {
+  display: none !important;
+  border: none !important;
+}
+
+#header-desktop .menu > .menu-item.delimiter {
+  display: none !important;
+}
+
+#header-mobile .header-container .menu {
+  border-top: none !important;
+}
+
+/* Nav menu items on the right — white text */
+#header-desktop .menu {
+  > .menu-item {
+    > a,
+    > span {
+      color: rgba(255, 255, 255, 0.85) !important;
+      font-weight: 500;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: #ffffff !important;
+      }
+    }
+  }
+
+  /* Social icon menu items — no text, just icons */
+  > .menu-item > a > i {
+    font-size: 1.1rem;
+  }
+
+  /* Search styling */
+  .search {
+    input {
+      &::placeholder {
+        color: transparent !important;
+      }
+
+      &:focus::placeholder {
+        color: rgba(255, 255, 255, 0.4) !important;
+      }
+    }
+
+    .search-button {
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
+  }
+}
+
+/* ============================================================
+   Full-width page — break out of .page width constraint
+   ============================================================ */
+.page.home {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+main.fi-container:has(.page.home) {
+  padding-inline: 0 !important;
+}
+
+/* ============================================================
+   Seamless background — entire body uses matching deep blue
+   ============================================================ */
+body {
+  background: #0a1628 !important;
+}
+
+.wrapper {
+  background: transparent !important;
+}
+
+/* ============================================================
+   Homepage Hero — Full-viewport profile section
+   ============================================================ */
+.page.home {
+  /* Hero profile */
+  .home-profile {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 3rem 1.5rem 5rem;
+    overflow: hidden;
+
+    /* Static gradient background */
+    background: linear-gradient(
+      135deg,
+      #0a1628 0%,
+      #132744 30%,
+      #1a3a5c 50%,
+      #0f2440 70%,
+      #0a1628 100%
+    );
+
+    /* Glowing accent orb */
+    &::after {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(74, 158, 218, 0.12) 0%, transparent 70%);
+      top: -150px;
+      right: -200px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Ensure all children sit above terminal bg */
+    > * {
+      position: relative;
+      z-index: 2;
+    }
+  }
+
+  /* ---- Avatar: rounded rectangle ---- */
+  .home-avatar {
+    padding: 0.75rem !important;
+
+    img {
+      width: 10rem !important;
+      height: 10rem !important;
+      object-fit: cover;
+      border-radius: 1rem !important;
+      box-shadow:
+        0 0 0 3px rgba(74, 158, 218, 0.4),
+        0 0 30px rgba(74, 158, 218, 0.15),
+        0 20px 40px rgba(0, 0, 0, 0.3) !important;
+      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+
+      &:hover {
+        transform: translateY(-0.5rem) scale(1.03) !important;
+        box-shadow:
+          0 0 0 3px rgba(74, 158, 218, 0.6),
+          0 0 40px rgba(74, 158, 218, 0.25),
+          0 25px 50px rgba(0, 0, 0, 0.4) !important;
+      }
+    }
+  }
+
+  /* ---- Name title ---- */
+  .home-title {
+    font-size: 2.4rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em;
+    margin-top: 1rem !important;
+    color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ---- Subtitle: terminal style with syntax highlighting ---- */
+  .home-subtitle {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', 'Courier New', monospace !important;
+    font-size: 1.1rem !important;
+    color: #c8d6e5 !important;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.5rem;
+    padding: 0.6rem 1.2rem !important;
+    margin-top: 0.5rem !important;
+    backdrop-filter: blur(4px);
+    text-shadow: none !important;
+
+    .typeit .ti-cursor {
+      color: #4ade80 !important;
+    }
+  }
+
+  /* ---- Disclaimer / tagline ---- */
+  .home-disclaimer {
+    font-size: 1rem !important;
+    font-weight: 400 !important;
+    color: rgba(200, 214, 229, 0.6) !important;
+    margin-top: 1rem !important;
+    max-width: 500px;
+    text-align: center;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+
+  /* ---- Social links ---- */
+  .links {
+    margin-top: 1.5rem !important;
+    padding: 0.75rem !important;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.8rem;
+      height: 2.8rem;
+      margin: 0 0.4rem;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #e2e8f0 !important;
+      font-size: 1.3rem !important;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
+
+      &:hover {
+        background: rgba(74, 158, 218, 0.3);
+        border-color: rgba(74, 158, 218, 0.5);
+        color: #ffffff !important;
+        transform: translateY(-3px);
+        box-shadow: 0 5px 20px rgba(74, 158, 218, 0.3);
+      }
+
+      * {
+        vertical-align: middle !important;
+      }
+    }
+  }
+
+  /* ---- Posts section below the hero ---- */
+  .summary {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-inline: 1.5rem;
+
+    .single-title {
+      color: #e2e8f0 !important;
+    }
+
+    .content {
+      color: #8899aa !important;
+    }
+
+    a {
+      color: #4a9eda !important;
+
+      &:hover {
+        color: #7ccaff !important;
+      }
+    }
+  }
+}
+
+/* ============================================================
+   Terminal background — animated typing lines
+   ============================================================ */
+.terminal-bg {
+  position: absolute !important;
+  inset: 0;
+  z-index: 1 !important;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ---- Terminal window boxes ---- */
+.terminal-box {
+  position: absolute;
+  white-space: nowrap;
+  width: auto;
+  min-width: 160px;
+  max-width: 280px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: rgba(10, 18, 32, 0.55);
+  border: 1px solid rgba(74, 158, 218, 0.12);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  animation: terminalFade 7s ease-in-out infinite;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+  &:nth-child(odd) {
+    border-color: rgba(74, 222, 128, 0.12);
+  }
+  &:nth-child(3n) {
+    border-color: rgba(251, 191, 36, 0.1);
+  }
+}
+
+.terminal-box-content {
+  padding: 0.5rem 0.8rem;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', 'Courier New', monospace;
+  font-size: 0.75rem;
+  color: rgba(200, 214, 229, 0.25);
+  line-height: 1.4;
+}
+
+.terminal-prompt {
+  color: rgba(74, 222, 128, 0.4);
+}
+
+@keyframes terminalFade {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  10%, 85% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-3px);
+  }
+}
+
+/* ============================================================
+   Scroll-down indicator at bottom of hero
+   ============================================================ */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: scrollBounce 2s ease-in-out infinite;
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  i {
+    font-size: 1.4rem;
+  }
+}
+
+@keyframes scrollBounce {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateX(-50%) translateY(8px);
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   Footer — match the dark blue background
+   ============================================================ */
+footer {
+  background: transparent !important;
+  color: #4a6080 !important;
+
+  a {
+    color: #4a9eda !important;
+  }
+}
+
+/* ============================================================
+   Non-homepage — restore visible header on inner pages
+   ============================================================ */
+body:not(:has(.page.home)) {
+  header {
+    position: relative !important;
+    background-color: rgba(10, 22, 40, 0.95) !important;
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* ============================================================
+   Global link/text color adjustments for dark blue theme
+   ============================================================ */
+.page:not(.home) {
+  color: #c8d6e5;
+
+  a {
+    color: #4a9eda;
+
+    &:hover {
+      color: #7ccaff;
+    }
+  }
+}
+
+/* Search dropdown styling */
+.search-dropdown {
+  background: rgba(10, 22, 40, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border: none !important;
+
+  &:empty,
+  &:not(.opened) {
+    display: none !important;
+    border: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+  }
+}
+
+/* ============================================================
+   Responsive tweaks
+   ============================================================ */
+@media screen and (max-width: 680px) {
+  .page.home {
+    .home-avatar img {
+      width: 7rem !important;
+      height: 7rem !important;
+    }
+    .home-title {
+      font-size: 1.6rem !important;
+    }
+    .home-subtitle {
+      font-size: 0.95rem !important;
+    }
+  }
+}
