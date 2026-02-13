@@ -32,6 +32,14 @@ jobs:
           aws-region: il-central-1 
 
       - name: Deploy to S3
+        run: aws s3 sync ./public s3://${{ secrets.S3_BUCKET_NAME }} --delete
+
+      - name: Invalidate CloudFront Cache
+        run: aws cloudfront create-invalidation --distribution-id REDACTED_DISTRIBUTION_ID --paths "/*"
+
+      - name: Purge Cloudflare Cache
         run: |
-          aws s3 sync ./public s3://${{ secrets.S3_BUCKET_NAME }} --delete && \
-          aws cloudfront create-invalidation --distribution-id REDACTED_DISTRIBUTION_ID --paths "/*"
+          curl -s -X POST "https://api.cloudflare.com/client/v4/zones/REDACTED_ZONE_ID/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'
