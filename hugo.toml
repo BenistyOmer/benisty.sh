@@ -10,6 +10,11 @@ theme = 'FixIt'
   defaultTheme = 'dark'
   description = 'Omer Benisty - Linux Enthusiast & Systems Administrator'
 
+  [params.app]
+    svgFavicon = '/favicon.svg'
+    iconColor = '#4ade80'
+    tileColor = '#0f2440'
+
   [params.header]
     [params.header.title]
       name = 'benisty.sh'
@@ -61,21 +66,21 @@ theme = 'FixIt'
       icon = 'fa-solid fa-archive'
   [[menus.main]]
     identifier = 'github'
-    name = ''
+    name = 'GitHub'
     url = 'https://github.com/BenistyOmer'
     weight = 2
     [menus.main.params]
       icon = 'fa-brands fa-github'
   [[menus.main]]
     identifier = 'linkedin'
-    name = ''
+    name = 'LinkedIn'
     url = 'https://www.linkedin.com/in/omerbenisty'
     weight = 3
     [menus.main.params]
       icon = 'fa-brands fa-linkedin'
   [[menus.main]]
     identifier = 'email'
-    name = ''
+    name = 'Email'
     url = 'mailto:contact@benisty.sh'
     weight = 4
     [menus.main.params]
