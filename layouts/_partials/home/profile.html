@@ -1,0 +1,268 @@
+{{- $profile := .Site.Params.home.profile -}}
+{{- $author := partial "function/get-author-map.html" .Params.author -}}
+
+<div class="home-profile">
+  <!-- Terminal background animation -->
+  <div class="terminal-bg" id="terminal-bg"></div>
+
+  {{- $avatar := dict "Email" $profile.gravatarEmail "Size" "96" | partial "function/get-gravatar.html" | default $profile.avatarURL | default $author.avatar -}}
+  {{- if $avatar -}}
+    <div class="home-avatar">
+      {{- $menus := $.Site.Menus.main | default slice -}}
+      {{- $optim := slice 
+        (dict "Process" "fill center 96x96 webp" "descriptor" "96w")
+        (dict "Process" "fill center 144x144 webp" "descriptor" "144w")
+        (dict "Process" "fill center 192x192 webp" "descriptor" "192w") 
+      -}}
+      {{- $avatarMenuIndex := 0 -}}
+      {{- if $profile.avatarMenu -}}
+        {{- range $index, $menu := $menus -}}
+          {{- if eq $menu.Identifier $profile.avatarMenu -}}
+            {{- $avatarMenuIndex = $index -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      {{- with index $menus $avatarMenuIndex -}}
+        {{- $url := .URL | relLangURL -}}
+        {{- with .Page -}}
+          {{- $url = .RelPermalink -}}
+        {{- end -}}
+        <a href="{{ $url }}"{{ with .Title | default .Name }} title="{{ . }}"{{ end }}{{ if (urls.Parse $url).Host }} rel="noopener noreferrer" target="_blank"{{ end }}>
+          {{- dict "Src" $avatar "Alt" "Home avatar" "Width" 96 "Height" 96 "OptimConfig" $optim | partial "plugin/image.html" -}}
+        </a>
+      {{- else -}}
+        {{- dict "Src" $avatar "Alt" "Home avatar" "Width" 96 "Height" 96 "OptimConfig" $optim | partial "plugin/image.html" -}}
+      {{- end -}}
+    </div>
+  {{- end -}}
+
+  <h1 class="home-title">
+    {{- with $profile.title -}}
+      {{- . | safeHTML -}}
+    {{- end -}}
+  </h1>
+
+  {{- with $profile.subtitle -}}
+    <p class="home-subtitle">
+      {{- if $profile.typeit -}}
+        <span class="d-none">{{ . }}</span>
+        {{- $.Store.Set "hasTyped" true -}}
+        <span class="typeit"><template>{{ . | safeHTML }}</template></span>
+      {{- else -}}
+        {{- . | safeHTML -}}
+      {{- end -}}
+    </p>
+  {{- end -}}
+
+  {{- if $profile.social -}}
+    <div class="links">
+      {{- $socialMap := resources.Get "data/social.yml" | transform.Unmarshal -}}
+      {{- $socialArr := slice -}}
+      {{- range $key, $value := .Site.Params.social -}}
+        {{- $social := $key | lower | index $socialMap | default dict -}}
+        {{- if $value -}}
+          {{- if reflect.IsMap $value -}}
+            {{- with $value.weight -}}
+              {{- $social = dict "Weight" . | merge $social -}}
+            {{- end -}}
+            {{- with $value.prefix -}}
+              {{- $social = dict "Prefix" . | merge $social -}}
+            {{- end -}}
+            {{- with $value.template -}}
+              {{- $social = dict "Template" . | merge $social -}}
+            {{- end -}}
+            {{- with $value.id -}}
+              {{- $social = dict "Id" . | merge $social -}}
+            {{- end -}}
+            {{- with $value.url -}}
+              {{- $social = dict "Url" . | merge $social -}}
+            {{- end -}}
+            {{- with $value.title -}}
+              {{- $social = dict "Title" . | merge $social -}}
+            {{- end -}}
+            {{- with $value.newtab -}}
+              {{- $social = dict "Newtab" . | merge $social -}}
+            {{- end -}}
+            {{- with $value.icon -}}
+              {{- $icon := dict -}}
+              {{- with .class -}}
+                {{- $icon = dict "Class" . | merge $icon -}}
+              {{- end -}}
+              {{- with .simpleicons -}}
+                {{- $icon = dict "Simpleicons" . | merge $icon -}}
+              {{- end -}}
+              {{- with .src -}}
+                {{- $icon = dict "Src" . | merge $icon -}}
+              {{- end -}}
+              {{- $social = dict "Icon" $icon | merge $social -}}
+            {{- end -}}
+          {{- else if ne $value true -}}
+            {{- $social = dict "Id" $value | merge $social -}}
+          {{- end -}}
+          {{- if $social.Icon.Simpleicons -}}
+            {{- $prefix := ($.Site.Store.Get "cdn" | default dict).simpleIconsPrefix -}}
+            {{- $social = dict "Prefix" $prefix | dict "Icon" | merge $social -}}
+          {{- end -}}
+          {{- $socialArr = $socialArr | append $social -}}
+        {{- end -}}
+      {{- end -}}
+      {{- range sort $socialArr "Weight" -}}
+        {{- partial "plugin/social.html" . -}}
+      {{- end -}}
+    </div>
+  {{- end -}}
+
+  {{- with $profile.disclaimer -}}
+    <p class="home-disclaimer">
+      {{- . | safeHTML -}}
+    </p>
+  {{- end -}}
+
+  {{- /* Custom Profile */ -}}
+  {{- block "custom-profile" . }}{{ end -}}
+
+  <!-- Scroll down indicator -->
+  <div class="scroll-indicator" onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})">
+    <span>Scroll</span>
+    <i class="fa-solid fa-chevron-down"></i>
+  </div>
+</div>
+
+<script>
+(function() {
+  var commands = [
+    'ssh root@10.0.0.1',
+    'systemctl status nginx',
+    'docker ps -a --no-trunc',
+    'kubectl get pods -n production',
+    'tail -f /var/log/syslog',
+    'ansible-playbook deploy.yml',
+    'ip addr show eth0',
+    'df -h /',
+    'uptime',
+    'free -m',
+    'journalctl -u sshd',
+    'git log --oneline -5',
+    'chmod 600 ~/.ssh/id_rsa',
+    'rsync -avz /backup/ remote:/',
+    'iptables -L -n',
+    'ss -tulnp',
+    'crontab -l',
+    'openssl x509 -noout -dates',
+    'terraform plan',
+    'vim /etc/nginx/default'
+  ];
+
+  var bg = document.getElementById('terminal-bg');
+  if (!bg) return;
+
+  var heroW = bg.offsetWidth;
+  var heroH = bg.offsetHeight;
+  var boxW = 220;
+  var boxH = 40;
+  var centerX1 = heroW * 0.28;
+  var centerX2 = heroW * 0.72;
+  var centerY1 = heroH * 0.2;
+  var centerY2 = heroH * 0.8;
+  var topPad = 60;
+  var pad = 10;
+  var animDuration = 7000; // matches CSS animation duration
+
+  var placed = [];
+
+  function overlapsAny(x, y, skipIdx) {
+    for (var i = 0; i < placed.length; i++) {
+      if (i === skipIdx) continue;
+      var p = placed[i];
+      if (p && Math.abs(x - p[0]) < boxW + 20 && Math.abs(y - p[1]) < boxH + 20) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function inCenter(x, y) {
+    return x + boxW > centerX1 && x < centerX2 &&
+           y + boxH > centerY1 && y < centerY2;
+  }
+
+  function findPosition(skipIdx) {
+    for (var attempt = 0; attempt < 300; attempt++) {
+      var x = pad + Math.random() * (heroW - boxW - pad * 2);
+      var y = topPad + Math.random() * (heroH - boxH - topPad - pad);
+      if (!inCenter(x, y) && !overlapsAny(x, y, skipIdx)) {
+        return [x, y];
+      }
+    }
+    return null;
+  }
+
+  function relocateBox(idx) {
+    // Recalculate hero size
+    heroW = bg.offsetWidth;
+    heroH = bg.offsetHeight;
+    centerX1 = heroW * 0.28;
+    centerX2 = heroW * 0.72;
+    centerY1 = heroH * 0.2;
+    centerY2 = heroH * 0.8;
+
+    var pos = findPosition(idx);
+    if (!pos) return;
+
+    placed[idx] = pos;
+
+    var entry = lines[idx];
+    var box = entry.box;
+    var cmd = commands[Math.floor(Math.random() * commands.length)];
+
+    box.style.animation = 'none';
+    box.offsetHeight;
+    box.style.left = pos[0] + 'px';
+    box.style.top = pos[1] + 'px';
+    entry.content.innerHTML = '<span class="terminal-prompt">$</span> ' + cmd;
+    box.style.animation = '';
+    box.style.animationDuration = (animDuration / 1000) + 's';
+    box.style.animationDelay = '0s';
+    box.style.animationFillMode = 'both';
+
+    // Schedule next relocation at the end of this animation
+    clearTimeout(entry.timer);
+    entry.timer = setTimeout(function() { relocateBox(idx); }, animDuration);
+  }
+
+  var lines = [];
+  var boxCount = 12;
+
+  for (var i = 0; i < boxCount; i++) {
+    var pos = findPosition(-1);
+    if (!pos) continue;
+
+    placed.push(pos);
+
+    var box = document.createElement('div');
+    box.className = 'terminal-box';
+    box.style.left = pos[0] + 'px';
+    box.style.top = pos[1] + 'px';
+
+    var content = document.createElement('div');
+    content.className = 'terminal-box-content';
+    var cmd = commands[Math.floor(Math.random() * commands.length)];
+    content.innerHTML = '<span class="terminal-prompt">$</span> ' + cmd;
+
+    box.appendChild(content);
+    bg.appendChild(box);
+
+    var idx = lines.length;
+    lines.push({ box: box, content: content, timer: null });
+
+    // Stagger initial animations, then each box self-schedules
+    (function(boxIdx, delay) {
+      var entry = lines[boxIdx];
+      entry.box.style.animationDuration = (animDuration / 1000) + 's';
+      entry.box.style.animationDelay = (delay / 1000) + 's';
+      entry.box.style.animationFillMode = 'both';
+      entry.timer = setTimeout(function() { relocateBox(boxIdx); }, delay + animDuration);
+    })(idx, i * 500);
+  }
+})();
+</script>

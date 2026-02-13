@@ -1,4 +1,82 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://benisty.sh/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'benisty.sh'
 theme = 'FixIt'
+
+[outputs]
+  home = ['html', 'rss', 'search']
+
+[params]
+  defaultTheme = 'dark'
+  description = 'Omer Benisty - Linux Enthusiast & Systems Administrator'
+
+  [params.header]
+    [params.header.title]
+      name = 'benisty.sh'
+
+  [params.search]
+    enable = true
+    type = 'fuse'
+    contentLength = 4000
+    placeholder = 'Search...'
+    maxResultLength = 10
+    snippetLength = 30
+    highlightTag = 'em'
+
+  [params.home]
+    [params.home.profile]
+      enable = true
+      title = 'Omer Benisty'
+      subtitle = '<span style="color:#4ade80">$</span> <span style="color:#5bb8ff">whoami</span> <span style="color:#f472b6">></span> <span style="color:#fbbf24">Linux Enthusiast</span>'
+      typeit = true
+      social = true
+      avatarURL = '/images/avatar.jpg'
+      disclaimer = 'Resume, projects, and random articles about Linux, infrastructure & everything in between.'
+
+    [params.home.posts]
+      enable = true
+      paginate = 6
+
+  [params.social]
+    GitHub = 'BenistyOmer'
+    LinkedIn = 'omerbenisty'
+    Email = 'contact@benisty.sh'
+    RSS = false
+
+  [params.page]
+    [params.page.share]
+      enable = true
+      Twitter = true
+      Facebook = true
+      LinkedIn = true
+      Weibo = false
+
+[menus]
+  [[menus.main]]
+    identifier = 'posts'
+    name = 'Posts'
+    url = '/posts/'
+    weight = 1
+    [menus.main.params]
+      icon = 'fa-solid fa-archive'
+  [[menus.main]]
+    identifier = 'github'
+    name = ''
+    url = 'https://github.com/BenistyOmer'
+    weight = 2
+    [menus.main.params]
+      icon = 'fa-brands fa-github'
+  [[menus.main]]
+    identifier = 'linkedin'
+    name = ''
+    url = 'https://www.linkedin.com/in/omerbenisty'
+    weight = 3
+    [menus.main.params]
+      icon = 'fa-brands fa-linkedin'
+  [[menus.main]]
+    identifier = 'email'
+    name = ''
+    url = 'mailto:contact@benisty.sh'
+    weight = 4
+    [menus.main.params]
+      icon = 'fa-solid fa-envelope'
