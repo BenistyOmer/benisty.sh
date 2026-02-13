@@ -1,7 +1,7 @@
 /* ============================================================
    Header — transparent overlay, title left, nav+icons right
    ============================================================ */
-header {
+#header-desktop {
   background-color: transparent !important;
   position: absolute !important;
   top: 0;
@@ -13,6 +13,10 @@ header {
   &:hover {
     box-shadow: none !important;
   }
+}
+
+#header-mobile {
+  display: none !important;
 }
 
 /* Standard left-right layout */
@@ -133,6 +137,7 @@ body {
     align-items: center;
     justify-content: center;
     position: relative;
+    z-index: 1;
     padding: 3rem 1.5rem 5rem;
     overflow: hidden;
 
@@ -409,7 +414,7 @@ footer {
    Non-homepage — restore visible header on inner pages
    ============================================================ */
 body:not(:has(.page.home)) {
-  header {
+  #header-desktop {
     position: relative !important;
     background-color: rgba(10, 22, 40, 0.95) !important;
     backdrop-filter: blur(10px);
@@ -433,17 +438,26 @@ body:not(:has(.page.home)) {
 
 /* Search dropdown styling */
 .search-dropdown {
-  background: rgba(10, 22, 40, 0.95) !important;
-  backdrop-filter: blur(10px);
-  border: none !important;
-
-  &:empty,
-  &:not(.opened) {
-    display: none !important;
+  &.desktop {
+    background: rgba(10, 22, 40, 0.95) !important;
+    backdrop-filter: blur(10px);
     border: none !important;
-    height: 0 !important;
-    overflow: hidden !important;
   }
+
+  &.mobile {
+    background: rgba(10, 22, 40, 0.98) !important;
+    border: none !important;
+    color: #c8d6e5 !important;
+
+    a {
+      color: #4a9eda !important;
+    }
+  }
+}
+
+#search-dropdown-desktop:empty,
+#search-dropdown-mobile:empty {
+  display: none !important;
 }
 
 /* ============================================================
