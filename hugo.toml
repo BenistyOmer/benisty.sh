@@ -36,11 +36,12 @@ theme = 'FixIt'
       typeit = true
       social = true
       avatarURL = '/images/avatar.jpg'
-      disclaimer = 'Resume, projects, and random articles about Linux, infrastructure & everything in between.'
+      disclaimer = 'Projects, and random articles about Linux, infrastructure & everything in between.'
 
     [params.home.posts]
       enable = true
       paginate = 6
+      featuredPosts = ['/posts/this-site-architecture.md']
 
   [params.social]
     GitHub = 'BenistyOmer'
