@@ -1,7 +1,7 @@
 ---
 title: This Site Architecture
 date: 2026-02-14T19:21:14+02:00
-draft: true
+draft: false
 author:
   name: Omer Benisty
 description:
