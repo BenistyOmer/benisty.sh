@@ -32,11 +32,13 @@ theme = 'FixIt'
     [params.home.profile]
       enable = true
       title = 'Omer Benisty'
-      subtitle = '<span style="color:#4ade80">$</span> <span style="color:#5bb8ff">whoami</span> <span style="color:#f472b6">></span> <span style="color:#fbbf24">Linux Enthusiast</span>'
+      subtitle = '<span style="color:#555">$</span> <span style="color:#aaa">whoami</span> <span style="color:#555">></span> <span style="color:#888">Linux Enthusiast</span>'
       typeit = true
       social = true
       avatarURL = '/images/avatar.jpg'
       disclaimer = 'Projects, and random articles about Linux, infrastructure & everything in between.'
+      resumeURL = '#'
+      techStack = ['Linux', 'Docker', 'Kubernetes', 'Ansible', 'Terraform', 'AWS', 'Nginx', 'Git', 'Bash', 'Python', 'Cloudflare', 'Hugo', 'Proxmox', 'GitHub Actions', 'S3', 'CloudFront']
 
     [params.home.posts]
       enable = true

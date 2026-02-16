@@ -1,5 +1,27 @@
 /* ============================================================
-   Header — transparent overlay, title left, nav+icons right
+   Hidden elements
+   ============================================================ */
+#header-mobile,
+.theme-switch,
+.breadcrumb-container,
+.breadcrumb,
+#header-desktop .menu > .menu-item.delimiter {
+  display: none !important;
+}
+
+/* ============================================================
+   Global
+   ============================================================ */
+body {
+  background: #111 !important;
+}
+
+.wrapper {
+  background: transparent !important;
+}
+
+/* ============================================================
+   Header
    ============================================================ */
 #header-desktop {
   background-color: transparent !important;
@@ -10,104 +32,198 @@
   z-index: 100 !important;
   box-shadow: none !important;
 
-  &:hover {
-    box-shadow: none !important;
-  }
+  &:hover { box-shadow: none !important; }
 }
 
-#header-mobile {
-  display: none !important;
-}
-
-/* Standard left-right layout */
 .header-wrapper {
   justify-content: space-between !important;
   padding: 0 1.5rem !important;
 }
 
-/* Show the site title on the left — white text */
 .header-title {
   display: block !important;
 
-  a {
-    color: #ffffff !important;
+  a, .header-title-text {
+    color: #fff !important;
     font-weight: 600;
     letter-spacing: 0.03em;
 
-    &:hover {
-      color: rgba(255, 255, 255, 0.8) !important;
-    }
-  }
-
-  .header-title-text {
-    color: #ffffff !important;
+    &:hover { color: rgba(255, 255, 255, 0.7) !important; }
   }
 }
 
-/* Hide the theme toggle button entirely */
-.theme-switch {
-  display: none !important;
-}
-
-/* Remove any stray lines — breadcrumb borders, menu delimiters */
-.breadcrumb-container,
-.breadcrumb {
-  display: none !important;
-  border: none !important;
-}
-
-#header-desktop .menu > .menu-item.delimiter {
-  display: none !important;
-}
-
-#header-mobile .header-container .menu {
-  border-top: none !important;
-}
-
-/* Nav menu items on the right — white text */
 #header-desktop .menu {
-  > .menu-item {
-    > a,
-    > span {
-      color: rgba(255, 255, 255, 0.85) !important;
-      font-weight: 500;
-      transition: color 0.3s ease;
+  > .menu-item > a,
+  > .menu-item > span {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-weight: 400;
+    transition: color 0.2s ease;
 
-      &:hover {
-        color: #ffffff !important;
-      }
-    }
+    &:hover { color: #fff !important; }
   }
 
-  /* Social icon menu items — no text, just icons */
-  > .menu-item > a > i {
-    font-size: 1.1rem;
+  .search input {
+    &::placeholder { color: transparent !important; }
+    &:focus::placeholder { color: rgba(255, 255, 255, 0.4) !important; }
   }
 
-  /* Search styling */
-  .search {
-    input {
-      &::placeholder {
-        color: transparent !important;
-      }
+  .search-button { color: rgba(255, 255, 255, 0.7) !important; }
+}
 
-      &:focus::placeholder {
-        color: rgba(255, 255, 255, 0.4) !important;
-      }
-    }
-
-    .search-button {
-      color: rgba(255, 255, 255, 0.85) !important;
-    }
-  }
+body:not(:has(.page.home)) #header-desktop {
+  position: relative !important;
+  background-color: #111 !important;
 }
 
 /* ============================================================
-   Full-width page — break out of .page width constraint
+   Homepage
    ============================================================ */
 .page.home {
   width: 100% !important;
   max-width: 100% !important;
+
+  .home-profile {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    padding: 5rem 1.5rem 2rem;
+    background: #111;
+    box-sizing: border-box;
+  }
+
+  .profile-card {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2.5rem 3rem 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 0.75rem;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .home-avatar {
+    padding: 0 !important;
+
+    img {
+      width: 7rem !important;
+      height: 7rem !important;
+      object-fit: cover;
+      border-radius: 50% !important;
+      border: 2px solid rgba(255, 255, 255, 0.1) !important;
+      box-shadow: none !important;
+      transition: border-color 0.3s ease !important;
+
+      &:hover { border-color: rgba(255, 255, 255, 0.3) !important; }
+    }
+  }
+
+  .home-title {
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    margin-top: 1rem !important;
+    color: #fff !important;
+    letter-spacing: -0.01em;
+  }
+
+  .home-subtitle {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', monospace !important;
+    font-size: 0.9rem !important;
+    color: #888 !important;
+    background: none;
+    border: none;
+    padding: 0 !important;
+    margin-top: 0.3rem !important;
+    text-shadow: none !important;
+
+    .typeit .ti-cursor { color: #888 !important; }
+  }
+
+  .home-disclaimer {
+    font-size: 0.85rem !important;
+    font-weight: 400 !important;
+    color: #666 !important;
+    margin-top: 0.8rem !important;
+    max-width: 400px;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .home-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-top: 1.2rem;
+  }
+
+  .resume-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 1.1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0.4rem;
+    text-decoration: none !important;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    i { font-size: 0.85rem; }
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.1rem;
+      height: 2.1rem;
+      margin: 0 0.15rem;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #999 !important;
+      font-size: 0.95rem !important;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: #fff !important;
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+    }
+  }
+
+  .summary {
+    max-width: 700px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-inline: 1.5rem;
+    position: relative;
+
+    .single-title { color: #e0e0e0 !important; }
+    .content { color: #888 !important; }
+
+    a {
+      color: #ccc !important;
+      &:hover { color: #fff !important; }
+    }
+  }
 }
 
 main.fi-container:has(.page.home) {
@@ -115,225 +231,120 @@ main.fi-container:has(.page.home) {
 }
 
 /* ============================================================
-   Seamless background — entire body uses matching deep blue
+   Tech section
    ============================================================ */
-body {
-  background: #0a1628 !important;
+.tech-section {
+  width: 100%;
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.wrapper {
-  background: transparent !important;
+.tech-section-title {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* ============================================================
-   Homepage Hero — Full-viewport profile section
-   ============================================================ */
-.page.home {
-  /* Hero profile */
-  .home-profile {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 1;
-    padding: 3rem 1.5rem 5rem;
-    overflow: hidden;
+.tech-strip {
+  width: 100%;
+  max-width: 600px;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
 
-    /* Static gradient background */
-    background: linear-gradient(
-      135deg,
-      #0a1628 0%,
-      #132744 30%,
-      #1a3a5c 50%,
-      #0f2440 70%,
-      #0a1628 100%
-    );
+.tech-strip-track {
+  display: flex;
+  gap: 0.6rem;
+  width: max-content;
+  animation: techScroll 30s linear infinite;
+}
 
-    /* Glowing accent orb */
-    &::after {
-      content: '';
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(74, 158, 218, 0.12) 0%, transparent 70%);
-      top: -150px;
-      right: -200px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-    }
+.tech-pill {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  color: #666;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 2rem;
+  white-space: nowrap;
+}
 
-    /* Ensure all children sit above terminal bg */
-    > * {
-      position: relative;
-      z-index: 2;
-    }
-  }
-
-  /* ---- Avatar: rounded rectangle ---- */
-  .home-avatar {
-    padding: 0.75rem !important;
-
-    img {
-      width: 10rem !important;
-      height: 10rem !important;
-      object-fit: cover;
-      border-radius: 1rem !important;
-      box-shadow:
-        0 0 0 3px rgba(74, 158, 218, 0.4),
-        0 0 30px rgba(74, 158, 218, 0.15),
-        0 20px 40px rgba(0, 0, 0, 0.3) !important;
-      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
-
-      &:hover {
-        transform: translateY(-0.5rem) scale(1.03) !important;
-        box-shadow:
-          0 0 0 3px rgba(74, 158, 218, 0.6),
-          0 0 40px rgba(74, 158, 218, 0.25),
-          0 25px 50px rgba(0, 0, 0, 0.4) !important;
-      }
-    }
-  }
-
-  /* ---- Name title ---- */
-  .home-title {
-    font-size: 2.4rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.02em;
-    margin-top: 1rem !important;
-    color: #ffffff !important;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  }
-
-  /* ---- Subtitle: terminal style with syntax highlighting ---- */
-  .home-subtitle {
-    font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', 'Courier New', monospace !important;
-    font-size: 1.1rem !important;
-    color: #c8d6e5 !important;
-    background: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 0.5rem;
-    padding: 0.6rem 1.2rem !important;
-    margin-top: 0.5rem !important;
-    backdrop-filter: blur(4px);
-    text-shadow: none !important;
-
-    .typeit .ti-cursor {
-      color: #4ade80 !important;
-    }
-  }
-
-  /* ---- Disclaimer / tagline ---- */
-  .home-disclaimer {
-    font-size: 1rem !important;
-    font-weight: 400 !important;
-    color: rgba(200, 214, 229, 0.6) !important;
-    margin-top: 1rem !important;
-    max-width: 500px;
-    text-align: center;
-    line-height: 1.6;
-    letter-spacing: 0.01em;
-  }
-
-  /* ---- Social links ---- */
-  .links {
-    margin-top: 1.5rem !important;
-    padding: 0.75rem !important;
-
-    a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 2.8rem;
-      height: 2.8rem;
-      margin: 0 0.4rem;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #e2e8f0 !important;
-      font-size: 1.3rem !important;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(4px);
-
-      &:hover {
-        background: rgba(74, 158, 218, 0.3);
-        border-color: rgba(74, 158, 218, 0.5);
-        color: #ffffff !important;
-        transform: translateY(-3px);
-        box-shadow: 0 5px 20px rgba(74, 158, 218, 0.3);
-      }
-
-      * {
-        vertical-align: middle !important;
-      }
-    }
-  }
-
-  /* ---- Posts section below the hero ---- */
-  .summary {
-    max-width: 800px;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    padding-inline: 1.5rem;
-    position: relative;
-
-    .single-title {
-      color: #e2e8f0 !important;
-    }
-
-    .content {
-      color: #8899aa !important;
-    }
-
-    a {
-      color: #4a9eda !important;
-
-      &:hover {
-        color: #7ccaff !important;
-      }
-    }
-  }
+@keyframes techScroll {
+  to { transform: translateX(-50%); }
 }
 
 /* ============================================================
-   Featured Post Card
+   Scroll indicator
    ============================================================ */
-.featured-post {
-  max-width: 800px;
-  margin: 2.5rem auto;
-  padding: 1.5rem 2rem;
-  background: rgba(19, 39, 68, 0.5);
-  border: 1px solid rgba(74, 158, 218, 0.25);
-  border-radius: 0.75rem;
-  position: relative;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(4px);
+.scroll-indicator {
+  margin-top: auto;
+  padding-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+
+  .scroll-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  i {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 1rem;
+    animation: scrollBounce 2.5s ease-in-out infinite;
+  }
 
   &:hover {
-    border-color: rgba(74, 158, 218, 0.5);
-    box-shadow: 0 0 30px rgba(74, 158, 218, 0.1);
-    transform: translateY(-2px);
+    .scroll-label { color: #999; }
+    i { color: rgba(255, 255, 255, 0.5); }
   }
+}
+
+@keyframes scrollBounce {
+  0%, 100% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 0.8; transform: translateY(5px); }
+}
+
+/* ============================================================
+   Featured posts
+   ============================================================ */
+.featured-posts-section {
+  max-width: 700px;
+  margin: 0 auto;
+  padding-inline: 1.5rem;
+}
+
+.featured-post {
+  margin: 1.5rem 0;
+  padding: 1.5rem 2rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.5rem;
+  transition: border-color 0.2s ease;
+
+  &:hover { border-color: rgba(255, 255, 255, 0.15); }
 }
 
 .featured-badge {
-  display: inline-block;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #fbbf24;
-  background: rgba(251, 191, 36, 0.1);
-  border: 1px solid rgba(251, 191, 36, 0.2);
-  border-radius: 0.3rem;
-  padding: 0.2rem 0.6rem;
-  margin-bottom: 0.75rem;
+  color: #999;
+  margin-bottom: 0.5rem;
 
-  i {
-    margin-right: 0.3rem;
-  }
+  i { margin-right: 0.3rem; }
 }
 
 .featured-link {
@@ -342,221 +353,75 @@ body {
 }
 
 .featured-title {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #e2e8f0 !important;
-  margin: 0 0 0.5rem;
-  transition: color 0.3s ease;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #e0e0e0 !important;
+  margin: 0 0 0.4rem;
 
-  .featured-post:hover & {
-    color: #5bb8ff !important;
-  }
+  .featured-post:hover & { color: #fff !important; }
 }
 
 .featured-desc {
-  color: #8899aa;
-  font-size: 0.95rem;
+  color: #888;
+  font-size: 0.9rem;
   line-height: 1.6;
-  margin: 0 0 1rem;
+  margin: 0 0 0.8rem;
 }
 
 .featured-read {
-  color: #4a9eda;
-  font-size: 0.85rem;
+  color: #999;
+  font-size: 0.8rem;
   font-weight: 500;
-  transition: all 0.3s ease;
 
   i {
     margin-left: 0.3rem;
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease;
   }
 
-  .featured-post:hover & {
-    color: #7ccaff;
-
-    i {
-      transform: translateX(4px);
-    }
-  }
+  .featured-post:hover & i { transform: translateX(3px); }
 }
 
 /* ============================================================
-   Terminal background — animated typing lines
-   ============================================================ */
-.terminal-bg {
-  position: absolute !important;
-  inset: 0;
-  z-index: 1 !important;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-/* ---- Terminal window boxes ---- */
-.terminal-box {
-  position: absolute;
-  white-space: nowrap;
-  width: auto;
-  min-width: 160px;
-  max-width: 280px;
-  border-radius: 6px;
-  overflow: hidden;
-  background: rgba(10, 18, 32, 0.55);
-  border: 1px solid rgba(74, 158, 218, 0.12);
-  backdrop-filter: blur(4px);
-  opacity: 0;
-  animation: terminalFade 7s ease-in-out infinite;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-
-  &:nth-child(odd) {
-    border-color: rgba(74, 222, 128, 0.12);
-  }
-  &:nth-child(3n) {
-    border-color: rgba(251, 191, 36, 0.1);
-  }
-}
-
-.terminal-box-content {
-  padding: 0.5rem 0.8rem;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Source Code Pro', 'Courier New', monospace;
-  font-size: 0.75rem;
-  color: rgba(200, 214, 229, 0.25);
-  line-height: 1.4;
-}
-
-.terminal-prompt {
-  color: rgba(74, 222, 128, 0.4);
-}
-
-@keyframes terminalFade {
-  0% {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-  10%, 85% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-3px);
-  }
-}
-
-/* ============================================================
-   Scroll-down indicator at bottom of hero
-   ============================================================ */
-.scroll-indicator {
-  position: relative;
-  margin-top: 2rem;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.8rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  animation: scrollBounce 2s ease-in-out infinite;
-  cursor: pointer;
-  transition: color 0.3s ease;
-
-  &:hover {
-    color: rgba(255, 255, 255, 0.8);
-  }
-
-  i {
-    font-size: 1.4rem;
-  }
-}
-
-@keyframes scrollBounce {
-  0%, 100% {
-    opacity: 0.5;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(8px);
-  }
-}
-
-/* ============================================================
-   Footer — match the dark blue background
+   Footer & inner pages
    ============================================================ */
 footer {
   background: transparent !important;
-  color: #4a6080 !important;
+  color: #555 !important;
 
-  a {
-    color: #4a9eda !important;
-  }
+  a { color: #999 !important; }
 }
 
-/* ============================================================
-   Non-homepage — restore visible header on inner pages
-   ============================================================ */
-body:not(:has(.page.home)) {
-  #header-desktop {
-    position: relative !important;
-    background-color: rgba(10, 22, 40, 0.95) !important;
-    backdrop-filter: blur(10px);
-  }
-}
-
-/* ============================================================
-   Global link/text color adjustments for dark blue theme
-   ============================================================ */
 .page:not(.home) {
-  color: #c8d6e5;
+  color: #ccc;
 
   a {
-    color: #4a9eda;
-
-    &:hover {
-      color: #7ccaff;
-    }
+    color: #ccc;
+    &:hover { color: #fff; }
   }
 }
 
-/* Search dropdown styling */
+/* ============================================================
+   Search
+   ============================================================ */
 .search-dropdown {
-  &.desktop {
-    background: rgba(10, 22, 40, 0.95) !important;
-    backdrop-filter: blur(10px);
-    border: none !important;
-  }
-
-  &.mobile {
-    background: rgba(10, 22, 40, 0.98) !important;
-    border: none !important;
-    color: #c8d6e5 !important;
-
-    a {
-      color: #4a9eda !important;
-    }
-  }
+  background: rgba(17, 17, 17, 0.95) !important;
+  border: none !important;
 }
 
-#search-dropdown-desktop:empty,
-#search-dropdown-mobile:empty {
+.dropdown-menu:not(.open),
+#search-dropdown-desktop:not(:has(.autocomplete-suggestion)),
+#search-dropdown-mobile:not(:has(.autocomplete-suggestion)) {
   display: none !important;
 }
 
 /* ============================================================
-   Responsive tweaks
+   Responsive
    ============================================================ */
 @media screen and (max-width: 680px) {
   .page.home {
-    .home-avatar img {
-      width: 7rem !important;
-      height: 7rem !important;
-    }
-    .home-title {
-      font-size: 1.6rem !important;
-    }
-    .home-subtitle {
-      font-size: 0.95rem !important;
-    }
+    .profile-card { padding: 2rem 1.5rem 1.5rem; }
+    .home-avatar img { width: 6rem !important; height: 6rem !important; }
+    .home-title { font-size: 1.5rem !important; }
+    .home-subtitle { font-size: 0.85rem !important; }
   }
 }

@@ -1,84 +1,84 @@
-// ========== Deep Blue Theme — Single Dark Mode ==========
+// ========== Clean Dark Theme ==========
 
-// Global backgrounds — deep navy blue
-$global-background-color: #0a1628;
-$global-background-color-dark: #0a1628;
+// Global backgrounds
+$global-background-color: #111111;
+$global-background-color-dark: #111111;
 
-// Text colors — light blue-grey on dark
-$global-font-color: #c8d6e5;
-$global-font-color-dark: #c8d6e5;
+// Text colors
+$global-font-color: #cccccc;
+$global-font-color-dark: #cccccc;
 
-$global-font-secondary-color: #6b839e;
-$global-font-secondary-color-dark: #6b839e;
+$global-font-secondary-color: #888888;
+$global-font-secondary-color-dark: #888888;
 
 // Links
-$global-link-color: #c8d6e5;
-$global-link-color-dark: #c8d6e5;
+$global-link-color: #cccccc;
+$global-link-color-dark: #cccccc;
 
-$global-link-hover-color: #5bb8ff;
-$global-link-hover-color-dark: #5bb8ff;
+$global-link-hover-color: #ffffff;
+$global-link-hover-color-dark: #ffffff;
 
-// Borders — subtle dark blue
-$global-border-color: #1a2d48;
-$global-border-color-dark: #1a2d48;
+// Borders
+$global-border-color: #222222;
+$global-border-color-dark: #222222;
 
-// Header — transparent (handled in _custom.scss)
+// Header
 $header-background-color: transparent;
 $header-background-color-dark: transparent;
 
-// Menu active
+// Menu
 $menu-active-color: #ffffff;
 $menu-active-color-dark: #ffffff;
 
-$menu-border-color: #1a2d48;
-$menu-border-color-dark: #1a2d48;
+$menu-border-color: #222222;
+$menu-border-color-dark: #222222;
 
 // Single content links
-$single-link-color: #4a9eda;
-$single-link-color-dark: #4a9eda;
+$single-link-color: #cccccc;
+$single-link-color-dark: #cccccc;
 
-$single-link-hover-color: #7ccaff;
-$single-link-hover-color-dark: #7ccaff;
+$single-link-hover-color: #ffffff;
+$single-link-hover-color-dark: #ffffff;
 
 // Code
-$code-color: #c8d6e5;
-$code-color-dark: #c8d6e5;
+$code-color: #cccccc;
+$code-color-dark: #cccccc;
 
-$code-background-color: #0f1f35;
-$code-background-color-dark: #0f1f35;
+$code-background-color: #1a1a1a;
+$code-background-color-dark: #1a1a1a;
 
 // Table
-$table-background-color: #0d1a2e;
-$table-background-color-dark: #0d1a2e;
+$table-background-color: #161616;
+$table-background-color-dark: #161616;
 
-$table-thead-color: #132744;
-$table-thead-color-dark: #132744;
+$table-thead-color: #1a1a1a;
+$table-thead-color-dark: #1a1a1a;
 
 // Selection
-$selection-color: rgba(74, 158, 218, 0.3);
-$selection-color-dark: rgba(74, 158, 218, 0.3);
+$selection-color: rgba(255, 255, 255, 0.15);
+$selection-color-dark: rgba(255, 255, 255, 0.15);
 
 // Search
-$search-background-color: #132744;
-$search-background-color-dark: #132744;
+$search-background-color: #1a1a1a;
+$search-background-color-dark: #1a1a1a;
 
 // Scrollbar
-$scrollbar-color: #1a3a5c;
-$scrollbar-hover-color: #4a9eda;
+$scrollbar-color: #333333;
+$scrollbar-hover-color: #555555;
 
 // Pagination
-$pagination-link-color: #4a6080;
-$pagination-link-color-dark: #4a6080;
+$pagination-link-color: #666666;
+$pagination-link-color-dark: #666666;
 
 $pagination-link-hover-color: #ffffff;
 $pagination-link-hover-color-dark: #ffffff;
 
 // Blockquote
-$blockquote-color: #6b839e;
-$blockquote-color-dark: #6b839e;
+$blockquote-color: #888888;
+$blockquote-color-dark: #888888;
 
 // Tag cloud
-$tag-cloud-start: #6b839e;
-$tag-cloud-end: #c8d6e5;
-$tag-cloud-start-dark: #6b839e;
-$tag-cloud-end-dark: #c8d6e5;
+$tag-cloud-start: #666666;
+$tag-cloud-end: #cccccc;
+$tag-cloud-start-dark: #666666;
+$tag-cloud-end-dark: #cccccc;
