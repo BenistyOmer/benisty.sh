@@ -6,6 +6,15 @@ theme = 'FixIt'
 [outputs]
   home = ['html', 'rss', 'search']
 
+[markup]
+  _merge = 'shallow'
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[taxonomies]
+  _merge = 'shallow'
+
 [params]
   defaultTheme = 'dark'
   description = 'Omer Benisty - Linux Enthusiast & Systems Administrator'
