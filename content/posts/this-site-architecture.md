@@ -12,12 +12,11 @@ tags:
   - AWS
 categories:
   - Architecture
-featuredImage: /images/this-site-architecture/benisty.sh-diagram.svg
-featuredImagePreview: /images/this-site-architecture/benisty.sh-diagram.svg
 ---
 
 It seems like every tech person has a website nowadays so on a random weekend I stayed at my parents' I decided it was time to make a corner on the
 internet about myself.
+<!--more-->
 
 ## Introduction
 
@@ -27,8 +26,6 @@ A few keypoints this site had to fulfill
 - Simple deploy and content management
 - A complete framework for the Front-End
 - Serverless
-
-<!--more-->
 
 **Diagram**
 > Monitoring will be added in the future
