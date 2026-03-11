@@ -60,6 +60,13 @@ theme = 'FixIt'
     Email = 'contact@benisty.sh'
     RSS = false
 
+  [params.codeblock]
+    mode = "simple"
+    maxShownLines = 0
+
+  [params.jsonViewer]
+    enable = false
+
   [params.page]
     [params.page.share]
       enable = true
