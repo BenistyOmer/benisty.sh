@@ -256,7 +256,7 @@ One of the goals was keeping this site cheap to maintain, so let's see how it tu
 | **CloudFront** | Free tier includes 1TB of data transfer and 10,000,000 requests per month |
 | **CloudFlare** | DNS and WAF are completely free |
 | **GitHub Actions** | Free for public repos, 2,000 minutes/month for private repos |
-| **Domain** | ~$10-15/year depending on the registrar and TLD |
+| **Domain** | $3/year |
 
 All in all the only real recurring cost is the domain name. As long as the site stays within the free tier limits (which for a personal blog it will), we're looking at roughly **$1/month** or less.
 
