@@ -7,18 +7,19 @@ author:
 description: A walkthrough of how I built and deployed my personal site using Hugo, AWS S3, CloudFront, CloudFlare and GitHub Actions.
 tags:
   - Linux
+  - Hugo
   - Github Actions
   - CI/CD
   - AWS
+  - CloudFlare
 categories:
   - Architecture
 ---
 
 It seems like every tech person has a website nowadays so on a random weekend I stayed at my parents' I decided it was time to make a corner on the
 internet about myself.
-<!--more-->
 
-## Introduction
+## Goals
 
 A few keypoints this site had to fulfill
 - Using platforms/tools I'm using in my line of work
@@ -26,6 +27,8 @@ A few keypoints this site had to fulfill
 - Simple deploy and content management
 - A complete framework for the Front-End
 - Serverless
+
+<!--more-->
 
 **Diagram**
 > Monitoring will be added in the future
@@ -83,7 +86,7 @@ Next up is our CDN, while we have a place to store our content we need to delive
 
 CloudFront is AWS's solution for content delivery, their large group of servers spread across the globe together with caching capability and generous free tier serve as a perfect candidate for our site. It's worth noting that while CloudFront does offer AWS WAF integration, it's a paid add-on so we won't be using it here — instead we'll handle that layer with CloudFlare later on.
 
-I created the distribution and linked it to our S3 bucket. I also verified our domain through certificate manager as part of the process, we went with the default caching policy which is more than we need and pointed our root file to index.html.
+I created the distribution and linked it to our S3 bucket. I also verified our domain through [AWS Certificate Manager (ACM)](https://aws.amazon.com/certificate-manager/) as part of the process — this is required for CloudFront to serve content over HTTPS with our custom domain. One thing to note is that CloudFront requires the certificate to be created in the **us-east-1** region regardless of where your other resources live. The validation itself is straightforward: ACM gives you a CNAME record to add to your DNS, and once it propagates the certificate is issued automatically. We went with the default caching policy which is more than we need and pointed our root file to index.html.
 
 As part of creating the distribution we also went back and edited our S3 bucket policy to allow CloudFront to access our files. The first statement grants the CloudFront service principal permission to read objects from our bucket, but only if the request originates from our specific distribution. The second statement denies any non-HTTPS traffic to the bucket:
 
@@ -157,10 +160,10 @@ You might be wondering why we need CloudFlare when we already have CloudFront as
 
 CloudFlare also makes DNS record updates almost instant since they manage both your DNS and WAF, which is great for trial and error.
 
-After adding our domain to cloudflare by changing our nameservers let's create a DNS record pointing to our CloudFront distribution.
+After adding our domain to CloudFlare by changing our nameservers let's create a DNS record pointing to our CloudFront distribution.
 
 
-<img src="/images/this-site-architecture/cloudflare-screenshot-1.png" alt="Architecture Diagram" style="width: 100%; border: 1px solid #333; border-radius: 4px; padding: 8px;">
+<img src="/images/this-site-architecture/cloudflare-screenshot-1.png" alt="CloudFlare DNS record pointing to CloudFront distribution" style="width: 100%; border: 1px solid #333; border-radius: 4px; padding: 8px;">
 
 Perfect, now our domain is pointing to our CloudFront distribution together with CloudFlare's powerful WAF (the orange cloud icon), let's tweak our WAF a little bit.
 
@@ -169,13 +172,13 @@ I made sure TLS encryption mode was set to Full and redirected all traffic to HT
 Since CloudFlare is a full blown CDN they also have caching turned on by default, but if you paid attention we already have caching on CloudFront, double caching can cause several issues and also duplicate content and makes it difficult to manage so we turned it off with a simple rule.
 
 
-<img src="/images/this-site-architecture/cloudflare-rule-3.png" alt="Architecture Diagram" style="width: 100%; border: 1px solid #333; border-radius: 4px; padding: 8px;">
+<img src="/images/this-site-architecture/cloudflare-rule-3.png" alt="CloudFlare cache bypass rule" style="width: 100%; border: 1px solid #333; border-radius: 4px; padding: 8px;">
 
 
 We also blocked some countries that are known sources of high volumes of bot traffic and automated attacks while we were at it. Since this is a personal blog with no real audience in those regions, blocking them reduces noise in our logs and lowers the risk of malicious scanning or abuse hitting our infrastructure.
 
 
-<img src="/images/this-site-architecture/cloudflare-rule-2.png" alt="Architecture Diagram" style="width: 100%; border: 1px solid #333; border-radius: 4px; padding: 8px;">
+<img src="/images/this-site-architecture/cloudflare-rule-2.png" alt="CloudFlare country block rule" style="width: 100%; border: 1px solid #333; border-radius: 4px; padding: 8px;">
 
 
 ## Github Actions our CI/CD warrior
@@ -233,12 +236,34 @@ jobs:
 ```
 
 Our pipeline is relatively simple:
-- We setup hugo on an ubuntu machine using hugo's integrated tools
+- We set up hugo on an ubuntu machine using hugo's integrated tools
 - Build our site
-- Setup credentials for AWS
+- Set up credentials for AWS
 - Upload our static files to our S3
-- Clears cache of CloudFront and Cloudflare
+- Clears cache of CloudFront and CloudFlare
 
 Even though we turned off CloudFlare's cache completely I preferred adding this into our pipeline in case we want to switch caching mechanisms in the future.
 
 And now we can clone our repo, write some articles, push our changes and our site will be live in no time.
+
+## Cost Breakdown
+
+One of the goals was keeping this site cheap to maintain, so let's see how it turned out. For a low traffic personal blog like this one, the monthly cost is practically zero:
+
+| Service | Cost |
+|---------|------|
+| **S3** | Free tier covers 5GB storage and 20,000 GET requests — more than enough |
+| **CloudFront** | Free tier includes 1TB of data transfer and 10,000,000 requests per month |
+| **CloudFlare** | DNS and WAF are completely free |
+| **GitHub Actions** | Free for public repos, 2,000 minutes/month for private repos |
+| **Domain** | ~$10-15/year depending on the registrar and TLD |
+
+All in all the only real recurring cost is the domain name. As long as the site stays within the free tier limits (which for a personal blog it will), we're looking at roughly **$1/month** or less.
+
+## Conclusion
+
+Looking back at the goals I set at the beginning, I'm happy with how this turned out. The site runs on tools I use daily at work, costs next to nothing to maintain, deploys automatically on every push, and doesn't require a single server to manage.
+
+The combination of Hugo for static site generation, S3 and CloudFront for hosting and delivery, CloudFlare for DNS and security, and GitHub Actions tying it all together gives us a simple but solid architecture. Each service handles what it's good at, and the free tiers of all these platforms make it hard to justify anything more complex for a personal blog.
+
+There are a few things I'd like to add down the road — monitoring and alerting to get visibility into traffic and errors, managing the infrastructure with Terraform instead of clicking through the console, and possibly adding a simple analytics solution. But for now, the site does exactly what it needs to do and gets out of the way so I can focus on writing.
