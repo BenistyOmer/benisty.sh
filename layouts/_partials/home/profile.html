@@ -59,14 +59,8 @@
       </p>
     {{- end -}}
 
-    <!-- Actions row: Resume button + social icons -->
+    <!-- Actions row: social icons -->
     <div class="home-actions">
-      {{- with $profile.resumeURL -}}
-        <a href="{{ . }}" class="resume-btn" target="_blank" rel="noopener noreferrer">
-          <i class="fa-solid fa-file-lines"></i> Resume
-        </a>
-      {{- end -}}
-
       {{- if $profile.social -}}
         <div class="links">
           {{- $socialMap := resources.Get "data/social.yml" | transform.Unmarshal -}}

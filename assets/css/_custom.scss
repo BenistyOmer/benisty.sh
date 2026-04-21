@@ -1,7 +1,6 @@
 /* ============================================================
    Hidden elements
    ============================================================ */
-#header-mobile,
 .theme-switch,
 .breadcrumb-container,
 .breadcrumb,
@@ -14,6 +13,7 @@
    ============================================================ */
 body {
   background: #111 !important;
+  overflow-x: hidden;
 }
 
 .wrapper {
@@ -84,6 +84,7 @@ body:not(:has(.page.home)) #header-desktop {
 
   .home-profile {
     height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -159,28 +160,6 @@ body:not(:has(.page.home)) #header-desktop {
     align-items: center;
     gap: 0.8rem;
     margin-top: 1.2rem;
-  }
-
-  .resume-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.45rem 1.1rem;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: #fff !important;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 0.4rem;
-    text-decoration: none !important;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.3);
-    }
-
-    i { font-size: 0.85rem; }
   }
 
   .links {
@@ -415,13 +394,168 @@ footer {
 }
 
 /* ============================================================
-   Responsive
+   Mobile header (FixIt switches to #header-mobile at <= 680px)
+   ============================================================ */
+@media screen and (max-width: 680px) {
+  #header-mobile {
+    background-color: #111 !important;
+    box-shadow: none !important;
+
+    .header-wrapper { padding: 0 1rem !important; }
+
+    .header-title a,
+    .header-title-text {
+      color: #fff !important;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+    }
+
+    .menu-toggle {
+      color: rgba(255, 255, 255, 0.7) !important;
+
+      span { background: rgba(255, 255, 255, 0.7) !important; }
+    }
+
+    .menu {
+      background-color: #111 !important;
+
+      .menu-item > a {
+        color: rgba(255, 255, 255, 0.75) !important;
+
+        &:hover,
+        &:active { color: #fff !important; }
+      }
+
+      .search input {
+        background: rgba(255, 255, 255, 0.04) !important;
+        color: #ccc !important;
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      }
+    }
+  }
+
+  /* Homepage: keep the hero header transparent and floating, like desktop */
+  body:has(.page.home) #header-mobile {
+    background-color: transparent !important;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100 !important;
+  }
+  /* When the mobile menu is open on the homepage we still need a solid backdrop */
+  body:has(.page.home) #header-mobile:has(.menu.active),
+  body:has(.page.home) #header-mobile:has(#menu-toggle-mobile.active) {
+    background-color: #111 !important;
+  }
+}
+
+/* ============================================================
+   Responsive: tablet & below
+   ============================================================ */
+@media screen and (max-width: 960px) {
+  .featured-posts-section { padding-inline: 1rem; }
+  .featured-post { padding: 1.25rem 1.25rem; }
+
+  .page:not(.home) .single .content {
+    /* Prevent code blocks and tables from busting the viewport */
+    pre,
+    .highlight,
+    .table-wrapper,
+    table { max-width: 100%; }
+
+    pre { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    img { max-width: 100% !important; height: auto !important; }
+  }
+}
+
+/* ============================================================
+   Responsive: phones
    ============================================================ */
 @media screen and (max-width: 680px) {
   .page.home {
-    .profile-card { padding: 2rem 1.5rem 1.5rem; }
-    .home-avatar img { width: 6rem !important; height: 6rem !important; }
-    .home-title { font-size: 1.5rem !important; }
-    .home-subtitle { font-size: 0.85rem !important; }
+    .home-profile {
+      padding: 4.5rem 1rem 1.5rem;
+    }
+
+    .profile-card {
+      padding: 1.75rem 1.25rem 1.25rem;
+      max-width: 100%;
+    }
+
+    .home-avatar img {
+      width: 5.5rem !important;
+      height: 5.5rem !important;
+    }
+
+    .home-title {
+      font-size: 1.45rem !important;
+      margin-top: 0.85rem !important;
+    }
+
+    .home-subtitle {
+      font-size: 0.8rem !important;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .home-disclaimer {
+      font-size: 0.8rem !important;
+      margin-top: 0.7rem !important;
+    }
+
+    .home-actions { margin-top: 1rem; }
+
+    .links a {
+      width: 2.4rem;
+      height: 2.4rem;
+      font-size: 1rem !important;
+    }
+
+    .summary {
+      padding-inline: 1rem;
+
+      .single-title { font-size: 1.15rem !important; }
+    }
   }
+
+  .tech-section { margin-top: 1.75rem; }
+  .tech-section-title { font-size: 0.7rem; }
+  .tech-pill { font-size: 0.7rem; padding: 0.22rem 0.65rem; }
+  .tech-strip-track { animation-duration: 22s; }
+
+  .scroll-indicator {
+    padding-bottom: 1rem;
+
+    .scroll-label { font-size: 0.7rem; }
+  }
+
+  .featured-posts-section { padding-inline: 1rem; }
+  .featured-post {
+    margin: 1rem 0;
+    padding: 1.1rem 1.1rem;
+    border-radius: 0.4rem;
+  }
+  .featured-title { font-size: 1.05rem; }
+  .featured-desc { font-size: 0.85rem; }
+
+  .page:not(.home) .single {
+    .single-title { font-size: 1.5rem !important; }
+    .single-subtitle { font-size: 0.95rem !important; }
+    .post-meta { font-size: 0.75rem !important; }
+
+    .content {
+      font-size: 0.95rem;
+
+      h2 { font-size: 1.25rem !important; }
+      h3 { font-size: 1.1rem !important; }
+
+      blockquote { padding: 0.5rem 0.85rem !important; }
+    }
+  }
+
+  /* Tap targets — make sure interactive elements meet ~44px guideline */
+  .menu-link,
+  .search-button { min-height: 2.75rem; }
 }
